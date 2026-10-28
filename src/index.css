@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+
+  /* Cey Exports palette — sampled from the company profile */
+  --color-forest-950: #071c14;
+  --color-forest-900: #0b2a1f;
+  --color-forest-800: #103629;
+  --color-forest-700: #1a4a39;
+  --color-forest-600: #27624c;
+  --color-forest-100: #dfe9e3;
+  --color-forest-50: #eef4f0;
+  --color-cream: #f5f1e6;
+  --color-sand: #eadfcb;
+  --color-gold: #e2a757;
+  --color-gold-dark: #c98c3a;
+  --color-rust: #9a4a1a;
+  --color-leaf: #5e8021;
+  --color-ink: #17231d;
+  /* Accent hues from the globe logo, used sparingly */
+  --color-globe-blue: #3a8fd0;
+  --color-globe-red: #e2452f;
+  --color-globe-yellow: #f6c21c;
+  --color-globe-green: #6fb04a;
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-marquee: marquee 45s linear infinite;
+  --animate-marquee-y: marquee-y 30s linear infinite;
+  --animate-slide-in: slide-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-pop: pop 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-spin-slow: spin 40s linear infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes marquee-y {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+  }
+  @keyframes slide-in {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes pop {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+}
+
+/* Frosted glass surfaces */
+@utility glass {
+  background: rgb(255 255 255 / 0.55);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 0.75);
+  box-shadow: 0 10px 40px -18px rgb(16 54 41 / 0.28), inset 0 1px 0 rgb(255 255 255 / 0.9);
+}
+@utility glass-strong {
+  background: rgb(255 253 248 / 0.82);
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  border: 1px solid rgb(255 255 255 / 0.9);
+  box-shadow: 0 20px 60px -24px rgb(16 54 41 / 0.35);
+}
+@utility glass-forest {
+  background: linear-gradient(135deg, rgb(16 54 41 / 0.9), rgb(11 42 31 / 0.8));
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgb(226 167 87 / 0.22);
+  box-shadow: 0 14px 40px -16px rgb(7 28 20 / 0.6), inset 0 1px 0 rgb(255 255 255 / 0.1);
+}
+@utility glass-dark {
+  background: rgb(255 255 255 / 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgb(255 255 255 / 0.16);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+  }
+  ::selection { background: var(--color-gold); color: var(--color-forest-900); }
+}
+
+/* Soft colour wash behind every page so the glass has something to refract */
+.page-aura {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40rem 30rem at 6% 8%, rgb(94 128 33 / 0.18), transparent 60%),
+    radial-gradient(36rem 28rem at 94% 14%, rgb(226 167 87 / 0.24), transparent 60%),
+    radial-gradient(44rem 34rem at 82% 92%, rgb(16 54 41 / 0.14), transparent 60%),
+    radial-gradient(30rem 26rem at 8% 88%, rgb(154 74 26 / 0.1), transparent 60%),
+    var(--color-cream);
+}
+
+/* Concentric gold rings from the profile's cover and contact pages */
+.rings {
+  background-image: repeating-radial-gradient(circle at 100% 100%, transparent 0 46px, rgb(226 167 87 / 0.28) 46px 47px);
+}
+.rings-tr {
+  background-image: repeating-radial-gradient(circle at 100% 0%, transparent 0 46px, rgb(226 167 87 / 0.25) 46px 47px);
+}
