@@ -13,7 +13,7 @@ export default function PageHero({ eyebrow, title, accent, subtitle, image, chil
         <div className="absolute left-0 top-0 h-1.5 w-1/4 bg-gold" />
         {eyebrow && <p className="text-xs font-bold uppercase tracking-[0.25em] text-gold">{eyebrow}</p>}
         <h1 className="mt-3 max-w-3xl text-4xl font-medium leading-tight sm:text-5xl">
-          {title} {accent && <em className="text-gold">{accent}</em>}
+          {title} {accent && <strong className="font-bold text-gold">{accent}</strong>}
         </h1>
         {subtitle && <p className="mt-3 max-w-2xl text-sm text-cream/75 sm:text-base">{subtitle}</p>}
         {children}

@@ -26,7 +26,7 @@ export default function Footer() {
         <div className="glass-strong flex flex-col items-center justify-between gap-6 rounded-[2rem] p-6 sm:p-8 md:flex-row">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-rust">Stay in the loop</p>
-            <h3 className="mt-1 text-2xl font-medium text-forest-800">Harvest updates & <em className="text-rust">trade offers</em></h3>
+            <h3 className="mt-1 text-2xl font-medium text-forest-800">Harvest updates & <strong className="font-bold text-rust">trade offers</strong></h3>
             <p className="mt-1 text-sm text-slate-600">Monthly price lists, new brands and container schedules.</p>
           </div>
           <form onSubmit={(e) => e.preventDefault()} className="flex w-full max-w-md items-center rounded-full bg-white p-1.5 ring-1 ring-forest-100">
@@ -68,7 +68,7 @@ export default function Footer() {
           <div>
             <Logo light />
             <p className="mt-5 max-w-xs font-serif text-xl leading-snug">
-              Sri Lanka's finest, <em className="text-gold">sourced</em> for the world.
+              Sri Lanka's finest, <strong className="font-bold text-gold">sourced</strong> for the world.
             </p>
             <p className="mt-3 max-w-xs text-sm text-cream/60">A fully owned subsidiary of Lanka Foods Middle East LLC, UAE.</p>
             <div className="mt-5 flex flex-wrap gap-2">

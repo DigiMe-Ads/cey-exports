@@ -22,7 +22,7 @@ function PromoStrip() {
         <div className="rings pointer-events-none absolute inset-0 opacity-40" />
         <img src="/cey/own-gingerbev.jpg" alt="" className="relative hidden h-24 w-24 rounded-2xl object-cover shadow-lg ring-4 ring-white/60 sm:block" />
         <div className="relative flex-1 px-2 text-center sm:px-6">
-          <p className="font-serif text-2xl font-medium italic text-forest-900 sm:text-4xl">“Happiness in every sip!”</p>
+          <p className="font-serif text-2xl font-bold text-forest-900 sm:text-4xl">“Happiness in every sip!”</p>
           <p className="mt-1 text-xs font-bold uppercase tracking-[0.2em] text-forest-800/80 sm:text-sm">Elephant House Ginger Bev · now shipping by the container</p>
         </div>
         <span className="relative grid h-12 w-12 shrink-0 place-items-center rounded-full bg-forest-800 text-gold transition group-hover:scale-110">
@@ -123,7 +123,7 @@ function AboutBand() {
         <div className="relative grid items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold">About the company</p>
-            <h2 className="mt-3 text-4xl font-medium leading-tight sm:text-5xl">Source any Sri Lankan brand — <em className="text-gold">under one roof.</em></h2>
+            <h2 className="mt-3 text-4xl font-medium leading-tight sm:text-5xl">Source any Sri Lankan brand — <strong className="font-bold text-gold">under one roof.</strong></h2>
             <p className="mt-5 max-w-xl text-cream/75">
               Ceylon International Exports (Pvt) Ltd is a Sri Lankan export consolidator and agricultural producer — a fully owned subsidiary of Lanka Foods Middle East LLC, UAE — delivering premium local brands and high-quality produce to global markets.
             </p>

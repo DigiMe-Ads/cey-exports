@@ -32,7 +32,7 @@ export default function Brands() {
 
       <section className="mx-auto mt-12 max-w-7xl px-4">
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="text-3xl font-medium text-forest-800">All <em className="text-rust">partner brands</em> <span className="font-sans text-base text-slate-500">({others.length})</span></h2>
+          <h2 className="text-3xl font-medium text-forest-800">All <strong className="font-bold text-rust">partner brands</strong> <span className="font-sans text-base text-slate-500">({others.length})</span></h2>
           <label className="glass flex h-11 w-full max-w-xs items-center gap-2 rounded-full px-4">
             <Search className="h-4 w-4 text-slate-400" />
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find a brand…" className="w-full bg-transparent text-sm outline-none" />
@@ -66,7 +66,7 @@ export default function Brands() {
           <div className="relative flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-rust">Don't see your brand?</p>
-              <h3 className="mt-2 text-3xl font-medium text-forest-800">We consolidate, pack and ship <em className="text-rust">any Sri Lankan brand.</em></h3>
+              <h3 className="mt-2 text-3xl font-medium text-forest-800">We consolidate, pack and ship <strong className="font-bold text-rust">any Sri Lankan brand.</strong></h3>
             </div>
             <Link to="/contact" className="inline-flex shrink-0 items-center gap-2 rounded-full bg-forest-800 px-6 py-3 font-bold text-cream">Request a brand <ArrowRight className="h-4 w-4 text-gold" /></Link>
           </div>

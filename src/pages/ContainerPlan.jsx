@@ -74,7 +74,7 @@ function InquiryModal({ onClose }) {
         ) : (
           <form onSubmit={submit} className="space-y-3">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-rust">No payment — our team will contact you</p>
-            <h2 className="text-3xl font-medium text-forest-800">Send your <em className="text-rust">inquiry</em></h2>
+            <h2 className="text-3xl font-medium text-forest-800">Send your <strong className="font-bold text-rust">inquiry</strong></h2>
             <div className="rounded-2xl bg-forest-50 p-3 text-sm text-forest-800">
               <b>{container.name}</b> · {stats.cartons.toLocaleString()} cartons · {fmtM3(stats.usedVol)} · <b>{stats.fill.toFixed(1)}% full</b>
             </div>
@@ -126,7 +126,7 @@ export default function ContainerPlan() {
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.22em] text-rust">Bulk order planner</p>
-          <h1 className="text-4xl font-medium text-forest-800">Your <em className="text-rust">container</em></h1>
+          <h1 className="text-4xl font-medium text-forest-800">Your <strong className="font-bold text-rust">container</strong></h1>
         </div>
         <Link to="/shop" className="flex items-center gap-2 text-sm font-bold text-forest-800 hover:underline"><ArrowLeft className="h-4 w-4" /> Add more products</Link>
       </div>

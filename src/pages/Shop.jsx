@@ -157,7 +157,7 @@ export default function Shop() {
             </div>
           ) : (
             <div className="glass rounded-3xl p-12 text-center">
-              <p className="font-serif text-2xl text-forest-800">Nothing here <em className="text-rust">yet</em></p>
+              <p className="font-serif text-2xl text-forest-800">Nothing here <strong className="font-bold text-rust">yet</strong></p>
               <p className="mt-2 text-sm text-slate-500">Try another filter — or ask us: we consolidate 30+ Sri Lankan brands.</p>
             </div>
           )}

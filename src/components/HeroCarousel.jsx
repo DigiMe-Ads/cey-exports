@@ -11,7 +11,7 @@ function SlideProfile() {
       <div className="relative flex h-full max-w-xl flex-col justify-center p-6 sm:p-10">
         <p className="text-xs font-bold uppercase tracking-[0.25em] text-gold">Export consolidator · Agricultural producer</p>
         <h1 className="mt-3 text-4xl font-medium leading-[1.05] text-cream sm:text-5xl lg:text-6xl">
-          Sri Lanka's finest, <em className="text-gold">sourced</em> for the world.
+          Sri Lanka's finest, <strong className="font-bold text-gold">sourced</strong> for the world.
         </h1>
         <p className="mt-4 max-w-md text-sm text-cream/80 sm:text-base">Premium Sri Lankan brands, spices and fresh produce for importers, distributors and wholesalers worldwide.</p>
         <div className="mt-6 flex flex-wrap gap-3">
@@ -31,7 +31,7 @@ function SlideOwnProducts() {
       <div className="rings pointer-events-none absolute inset-0 opacity-70" />
       <div className="relative">
         <p className="text-xs font-bold uppercase tracking-[0.25em] text-rust">Now in the UAE</p>
-        <h2 className="mt-3 text-4xl font-medium leading-tight text-forest-800 sm:text-5xl">Our very own <em className="text-rust">Sri Lankan</em> products</h2>
+        <h2 className="mt-3 text-4xl font-medium leading-tight text-forest-800 sm:text-5xl">Our very own <strong className="font-bold text-rust">Sri Lankan</strong> products</h2>
         <p className="mt-3 text-sm text-forest-800/75">Cloves · Cinnamon · Nutmeg · MD jams & cordials · Lanka Foods mackerel · Ginger beer · Highland · Lankasoy</p>
         <Link to="/brands" className="mt-6 inline-flex items-center gap-2 rounded-full bg-forest-800 px-6 py-3 text-sm font-bold text-cream hover:bg-forest-700">Explore our brands <ArrowRight className="h-4 w-4 text-gold" /></Link>
       </div>
@@ -53,7 +53,7 @@ function SlideFarm() {
       <div className="absolute inset-0 bg-gradient-to-l from-forest-950/85 via-forest-900/40 to-transparent" />
       <div className="relative ml-auto flex h-full max-w-lg flex-col justify-center p-6 text-right sm:p-10">
         <p className="text-xs font-bold uppercase tracking-[0.25em] text-gold">Kandy · Farm & poly tunnels</p>
-        <h2 className="mt-3 text-4xl font-medium leading-tight text-cream sm:text-5xl">Grown under cover, <em className="text-gold">all year round</em></h2>
+        <h2 className="mt-3 text-4xl font-medium leading-tight text-cream sm:text-5xl">Grown under cover, <strong className="font-bold text-gold">all year round</strong></h2>
         <p className="mt-3 text-sm text-cream/80">A 31-acre landholding and a 25,000 sq ft poly tunnel complex for export-grade vegetables.</p>
         <Link to="/shop?category=fresh" className="mt-6 inline-flex items-center gap-2 self-end rounded-full bg-gold px-6 py-3 text-sm font-bold text-forest-900 hover:bg-gold-dark">Fresh produce <ArrowRight className="h-4 w-4" /></Link>
       </div>

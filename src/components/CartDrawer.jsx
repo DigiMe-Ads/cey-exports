@@ -7,7 +7,7 @@ import { ContainerMeter, ContainerVisual } from './ContainerMeter'
 import { QtyStepper } from './ProductCard'
 
 export default function CartDrawer() {
-  const { drawerOpen, closeDrawer, lines, stats, container, setQty, remove, suggestions, add } = useCart()
+  const { drawerOpen, closeDrawer, lines, stats, container, containers, setContainerId, setQty, remove, suggestions, add } = useCart()
   const { pathname } = useLocation()
 
   // Close when the route changes (e.g. browser back, or a link elsewhere on the page)
@@ -40,6 +40,31 @@ export default function CartDrawer() {
           <button type="button" aria-label="Close" onClick={closeDrawer} className="grid h-10 w-10 place-items-center rounded-full bg-forest-50 text-forest-800 hover:bg-forest-100">
             <X className="h-5 w-5" />
           </button>
+        </div>
+
+        {/* Container choice up front, so buyers see they can switch size without visiting the planner */}
+        <div className="border-b border-forest-100 px-5 pb-4 pt-4">
+          <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-500">Container size</p>
+          <div role="radiogroup" aria-label="Container size" className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
+            {containers.map((c) => {
+              const active = c.id === container?.id
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={active}
+                  onClick={() => setContainerId(c.id)}
+                  title={c.name}
+                  className={`min-w-[92px] shrink-0 rounded-2xl px-3 py-2 text-left transition ${active ? 'bg-forest-800 text-cream shadow-lg shadow-forest-800/20' : 'bg-white/80 text-forest-800 ring-1 ring-forest-100 hover:bg-white'}`}
+                >
+                  <span className={`block text-xs font-extrabold ${active ? 'text-gold' : 'text-rust'}`}>{c.code || c.name}</span>
+                  <span className="block text-[11px] font-semibold">{fmtM3(c.usable_volume_cm3, 1)}</span>
+                  <span className={`block text-[10px] ${active ? 'text-cream/70' : 'text-slate-500'}`}>min {Math.round(c.min_fill_pct)}%</span>
+                </button>
+              )
+            })}
+          </div>
         </div>
 
         <div className="space-y-4 border-b border-forest-100 p-5">

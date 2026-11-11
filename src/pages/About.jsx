@@ -44,7 +44,7 @@ export default function About() {
           <div className="rings-tr pointer-events-none absolute inset-0" />
           <div className="relative">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-gold">Our vision</p>
-            <p className="mt-3 font-serif text-3xl leading-snug sm:text-4xl">To become a go-to name in global sourcing for <em className="text-gold">Sri Lankan food brands</em> and agricultural produce.</p>
+            <p className="mt-3 font-serif text-3xl leading-snug sm:text-4xl">To become a go-to name in global sourcing for <strong className="font-bold text-gold">Sri Lankan food brands</strong> and agricultural produce.</p>
             <div className="my-6 h-px bg-cream/15" />
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-gold">Our mission</p>
             <p className="mt-3 max-w-2xl font-serif text-xl text-cream/90">To be a reliable, trusted supplier of Sri Lankan food products by delivering consistent quality, secure logistics and strong supplier relationships.</p>

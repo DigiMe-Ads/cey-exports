@@ -16,7 +16,7 @@ function AuthShell({ title, accent, subtitle, children }) {
         <div className="relative flex h-full flex-col justify-between">
           <Logo light />
           <div>
-            <p className="font-serif text-3xl leading-snug">Plan a container. <em className="text-gold">Send an inquiry.</em> Track every step.</p>
+            <p className="font-serif text-3xl leading-snug">Plan a container. <strong className="font-bold text-gold">Send an inquiry.</strong> Track every step.</p>
             <ul className="mt-5 space-y-2 text-sm text-cream/80">
               <li>• See your container fill as you add cartons</li>
               <li>• No payment online — our team contacts you</li>
@@ -26,7 +26,7 @@ function AuthShell({ title, accent, subtitle, children }) {
         </div>
       </div>
       <div className="glass-strong rounded-[2rem] p-6 sm:p-8">
-        <h1 className="text-3xl font-medium text-forest-800">{title} <em className="text-rust">{accent}</em></h1>
+        <h1 className="text-3xl font-medium text-forest-800">{title} <strong className="font-bold text-rust">{accent}</strong></h1>
         <p className="mt-1 text-sm text-slate-600">{subtitle}</p>
         <div className="mt-6">{children}</div>
       </div>

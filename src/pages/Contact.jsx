@@ -83,7 +83,7 @@ export default function Contact() {
             </div>
           ) : (
             <form onSubmit={submit} className="space-y-4">
-              <h2 className="text-3xl font-medium text-forest-800">Request a <em className="text-rust">quote</em></h2>
+              <h2 className="text-3xl font-medium text-forest-800">Request a <strong className="font-bold text-rust">quote</strong></h2>
               <p className="text-sm text-slate-600">Tell us what you need and our team will get back within one business day.</p>
               <div className="grid gap-4 sm:grid-cols-2">
                 <input required maxLength={200} className={field} placeholder="Your name *" value={form.name} onChange={set('name')} />

@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 
-// Profile-style heading: serif title with an italic accent word, small caps eyebrow
+// Profile-style heading: title with a bold accent word, small caps eyebrow
 export default function SectionHeader({ eyebrow, title, accent, to, cta = 'View all', light = false, children }) {
   return (
     <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
       <div>
         {eyebrow && <p className={`mb-2 text-xs font-bold uppercase tracking-[0.22em] ${light ? 'text-gold' : 'text-rust'}`}>{eyebrow}</p>}
         <h2 className={`text-3xl font-medium tracking-tight sm:text-4xl ${light ? 'text-cream' : 'text-forest-800'}`}>
-          {title} {accent && <em className={`font-medium ${light ? 'text-gold' : 'text-rust'}`}>{accent}</em>}
+          {title} {accent && <strong className={`font-bold ${light ? 'text-gold' : 'text-rust'}`}>{accent}</strong>}
         </h2>
       </div>
       <div className="flex items-center gap-3">

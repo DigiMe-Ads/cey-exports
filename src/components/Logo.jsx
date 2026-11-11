@@ -7,7 +7,7 @@ export default function Logo({ light = false, compact = false }) {
       {!compact && (
         <span className="leading-none">
           <span className={`block font-serif text-xl sm:text-[1.45rem] font-semibold tracking-tight ${light ? 'text-cream' : 'text-forest-800'}`}>
-            Cey <em className={`font-medium ${light ? 'text-gold' : 'text-rust'}`}>Exports</em>
+            Cey <strong className={`font-bold ${light ? 'text-gold' : 'text-rust'}`}>Exports</strong>
           </span>
           <span className={`mt-0.5 hidden text-[9.5px] sm:block font-bold uppercase tracking-[0.18em] ${light ? 'text-cream/60' : 'text-forest-700/70'}`}>
             Ceylon International Exports

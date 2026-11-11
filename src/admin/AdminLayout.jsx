@@ -39,7 +39,7 @@ export default function AdminLayout() {
       <Link to="/admin" className="flex items-center gap-2.5 px-2">
         <span className="grid h-10 w-10 place-items-center rounded-full bg-white"><img src="/cey/globe.png" alt="" className="h-7 w-7" /></span>
         <span className="leading-none">
-          <span className="block font-serif text-lg font-semibold text-cream">Cey <em className="text-gold">Exports</em></span>
+          <span className="block font-serif text-lg font-semibold text-cream">Cey <strong className="font-bold text-gold">Exports</strong></span>
           <span className="text-[10px] font-bold uppercase tracking-widest text-cream/50">Admin panel</span>
         </span>
       </Link>
@@ -69,7 +69,7 @@ export default function AdminLayout() {
     <div className="min-h-screen lg:grid lg:grid-cols-[250px_1fr]">
       <aside className="sticky top-0 hidden h-screen bg-forest-900 p-5 lg:block">{sidebar}</aside>
       <header className="sticky top-0 z-30 flex items-center justify-between bg-forest-900 px-4 py-3 lg:hidden">
-        <span className="font-serif text-lg text-cream">Cey <em className="text-gold">Admin</em></span>
+        <span className="font-serif text-lg text-cream">Cey <strong className="font-bold text-gold">Admin</strong></span>
         <button type="button" aria-label="Open menu" onClick={() => setOpen(true)} className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-cream"><Menu className="h-5 w-5" /></button>
       </header>
       {open && (

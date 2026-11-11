@@ -74,7 +74,7 @@ export function Account() {
   return (
     <div className="mx-auto max-w-7xl px-4 pt-8">
       <p className="text-xs font-bold uppercase tracking-[0.22em] text-rust">My account</p>
-      <h1 className="text-4xl font-medium text-forest-800">Your <em className="text-rust">inquiries</em></h1>
+      <h1 className="text-4xl font-medium text-forest-800">Your <strong className="font-bold text-rust">inquiries</strong></h1>
       <div className="mt-6 grid items-start gap-6 lg:grid-cols-[1fr_320px]">
         <div className="space-y-4">
           <div className="grid grid-cols-3 gap-3">
