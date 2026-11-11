@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 import { ChevronRight, Mail, MapPin, Phone, Send } from 'lucide-react'
 import Logo from './Logo'
 import { AppleIcon, FacebookIcon, InstagramIcon, PlayIcon, TelegramIcon, TikTokIcon, WhatsAppIcon } from './BrandIcons'
-import { brands, categories, company } from '../data/catalog'
+import { company } from '../data/catalog'
+import { useCatalog } from '../context/CatalogContext'
 
 const col = (title, items) => (
   <div>
@@ -16,6 +17,7 @@ const col = (title, items) => (
 )
 
 export default function Footer() {
+  const { brands, categories } = useCatalog()
   const institutions = brands.filter((b) => b.featured)
   return (
     <footer className="relative mt-28">

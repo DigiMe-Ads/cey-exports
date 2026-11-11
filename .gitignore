@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local secrets
+.env.local
+TEST_ACCOUNTS.local.txt

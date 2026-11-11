@@ -1,17 +1,19 @@
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { SlidersHorizontal, Star, X } from 'lucide-react'
+import { SlidersHorizontal, X } from 'lucide-react'
 import ProductCard from '../components/ProductCard'
 import PageHero from '../components/PageHero'
-import { brands, categories, countIn, getBrand, getCategory, products } from '../data/catalog'
+import { useCatalog } from '../context/CatalogContext'
+import { useCart } from '../context/CartContext'
 
 const PER_PAGE = 12
 const sorts = {
   relevance: { label: 'Relevance', fn: () => 0 },
-  popular: { label: 'Most popular', fn: (a, b) => b.reviews - a.reviews },
+  popular: { label: 'Best sellers', fn: (a, b) => Number(b.best) - Number(a.best) },
   'price-asc': { label: 'Price: low to high', fn: (a, b) => a.price - b.price },
   'price-desc': { label: 'Price: high to low', fn: (a, b) => b.price - a.price },
-  rating: { label: 'Top rated', fn: (a, b) => b.rating - a.rating },
+  'volume-desc': { label: 'Largest cartons', fn: (a, b) => b.volume - a.volume },
+  'volume-asc': { label: 'Smallest cartons', fn: (a, b) => a.volume - b.volume },
 }
 
 function Panel({ title, children }) {
@@ -25,6 +27,8 @@ function Panel({ title, children }) {
 
 export default function Shop() {
   const [params, setParams] = useSearchParams()
+  const { brands, categories, countIn, getBrand, getCategory, products } = useCatalog()
+  const { roomFor } = useCart()
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [priceMin, setPriceMin] = useState('')
   const [priceMax, setPriceMax] = useState('')
@@ -32,7 +36,7 @@ export default function Shop() {
   const brand = params.get('brand') || ''
   const q = params.get('q') || ''
   const sort = params.get('sort') || 'relevance'
-  const minRating = Number(params.get('rating') || 0)
+  const fitsOnly = params.get('fits') === '1'
   const inStock = params.get('stock') === '1'
   const page = Number(params.get('page') || 1)
 
@@ -51,11 +55,11 @@ export default function Shop() {
       .filter((p) => (!category || p.category === category)
         && (!brand || p.brand === brand)
         && (!q || `${p.name} ${getBrand(p.brand)?.name}`.toLowerCase().includes(q.toLowerCase()))
-        && p.rating >= minRating
+        && (!fitsOnly || roomFor(p) >= p.minQty)
         && (!inStock || p.stock > 0)
-        && p.price >= lo && p.price <= hi)
+        && (p.price ?? 0) >= lo && (p.price ?? 0) <= hi)
       .sort(sorts[sort]?.fn ?? sorts.relevance.fn)
-  }, [category, brand, q, minRating, inStock, sort, priceMin, priceMax])
+  }, [products, getBrand, roomFor, category, brand, q, fitsOnly, inStock, sort, priceMin, priceMax])
 
   const pages = Math.max(1, Math.ceil(filtered.length / PER_PAGE))
   const current = Math.min(page, pages)
@@ -67,8 +71,9 @@ export default function Shop() {
     category && { label: getCategory(category)?.name, clear: () => set('category') },
     brand && { label: activeBrand?.name, clear: () => set('brand') },
     q && { label: `“${q}”`, clear: () => set('q') },
-    minRating && { label: `${minRating}★ & up`, clear: () => set('rating') },
+    fitsOnly && { label: 'Still fits', clear: () => set('fits') },
     inStock && { label: 'In stock', clear: () => set('stock') },
+    (priceMin || priceMax) && { label: `AED ${priceMin || 0} – ${priceMax || '∞'}`, clear: () => { setPriceMin(''); setPriceMax('') } },
   ].filter(Boolean)
 
   const sidebar = (
@@ -95,21 +100,16 @@ export default function Shop() {
           {brands.map((b) => <option key={b.slug} value={b.slug}>{b.name}</option>)}
         </select>
       </Panel>
-      <Panel title="Price range (AED)">
+      <Panel title="Carton price (AED)">
         <div className="flex gap-2">
           <input value={priceMin} onChange={(e) => setPriceMin(e.target.value)} inputMode="numeric" placeholder="Min" className="w-full rounded-xl bg-white px-3 py-2 text-sm outline-none ring-1 ring-forest-100" />
           <input value={priceMax} onChange={(e) => setPriceMax(e.target.value)} inputMode="numeric" placeholder="Max" className="w-full rounded-xl bg-white px-3 py-2 text-sm outline-none ring-1 ring-forest-100" />
         </div>
       </Panel>
-      <Panel title="Rating">
-        <div className="space-y-1">
-          {[5, 4, 3].map((r) => (
-            <button key={r} type="button" onClick={() => set('rating', minRating === r ? '' : String(r))} className={`flex w-full items-center gap-2 rounded-xl px-3 py-1.5 text-sm ${minRating === r ? 'bg-gold/30' : 'hover:bg-white/70'}`}>
-              <span className="flex">{[1, 2, 3, 4, 5].map((i) => <Star key={i} className={`h-4 w-4 ${i <= r ? 'fill-gold text-gold' : 'text-slate-300'}`} />)}</span>
-              <span className="text-xs font-semibold text-slate-600">& up</span>
-            </button>
-          ))}
-        </div>
+      <Panel title="Container">
+        <label className="flex cursor-pointer items-center gap-2 text-sm font-semibold">
+          <input type="checkbox" checked={fitsOnly} onChange={(e) => set('fits', e.target.checked ? '1' : '')} className="h-4 w-4 accent-forest-800" /> Only items that still fit
+        </label>
       </Panel>
       <Panel title="Availability">
         <label className="flex cursor-pointer items-center gap-2 text-sm font-semibold">
@@ -147,7 +147,7 @@ export default function Shop() {
                   {c.label} <X className="h-3.5 w-3.5" />
                 </button>
               ))}
-              <button type="button" onClick={() => setParams({})} className="px-2 text-xs font-bold text-rust underline">Clear all</button>
+              <button type="button" onClick={() => { setParams({}); setPriceMin(''); setPriceMax('') }} className="px-2 text-xs font-bold text-rust underline">Clear all</button>
             </div>
           )}
 
@@ -158,7 +158,7 @@ export default function Shop() {
           ) : (
             <div className="glass rounded-3xl p-12 text-center">
               <p className="font-serif text-2xl text-forest-800">Nothing here <em className="text-rust">yet</em></p>
-              <p className="mt-2 text-sm text-slate-500">Can't find a brand? We consolidate 30+ Sri Lankan brands — ask us on WhatsApp.</p>
+              <p className="mt-2 text-sm text-slate-500">Try another filter — or ask us: we consolidate 30+ Sri Lankan brands.</p>
             </div>
           )}
 

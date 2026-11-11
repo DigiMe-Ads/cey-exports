@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Search, Star } from 'lucide-react'
 import PageHero from '../components/PageHero'
-import { brandCount, brands } from '../data/catalog'
+import { useCatalog } from '../context/CatalogContext'
 
 export default function Brands() {
   const [q, setQ] = useState('')
+  const { brands, brandCount } = useCatalog()
   const own = brands.filter((b) => b.own)
   const others = brands.filter((b) => !b.own && b.name.toLowerCase().includes(q.toLowerCase()))
 

@@ -4,7 +4,8 @@ import { ArrowRight, ArrowUpRight, BadgeCheck, Leaf, ShieldCheck, Ship, Truck } 
 import HeroCarousel from '../components/HeroCarousel'
 import ProductCard from '../components/ProductCard'
 import SectionHeader from '../components/SectionHeader'
-import { blogs, brands, categories, company, countIn, products } from '../data/catalog'
+import { company } from '../data/catalog'
+import { useCatalog } from '../context/CatalogContext'
 
 const perks = [
   { icon: BadgeCheck, title: 'Authentic Sri Lankan', body: 'Direct from growers & brands' },
@@ -22,7 +23,7 @@ function PromoStrip() {
         <img src="/cey/own-gingerbev.jpg" alt="" className="relative hidden h-24 w-24 rounded-2xl object-cover shadow-lg ring-4 ring-white/60 sm:block" />
         <div className="relative flex-1 px-2 text-center sm:px-6">
           <p className="font-serif text-2xl font-medium italic text-forest-900 sm:text-4xl">“Happiness in every sip!”</p>
-          <p className="mt-1 text-xs font-bold uppercase tracking-[0.2em] text-forest-800/80 sm:text-sm">Elephant House Ginger Bev · 8 pack only AED 60</p>
+          <p className="mt-1 text-xs font-bold uppercase tracking-[0.2em] text-forest-800/80 sm:text-sm">Elephant House Ginger Bev · now shipping by the container</p>
         </div>
         <span className="relative grid h-12 w-12 shrink-0 place-items-center rounded-full bg-forest-800 text-gold transition group-hover:scale-110">
           <ArrowRight className="h-5 w-5" />
@@ -73,6 +74,7 @@ function Pillars() {
 }
 
 function Categories() {
+  const { categories, countIn } = useCatalog()
   return (
     <section className="mx-auto mt-20 max-w-7xl px-4">
       <SectionHeader eyebrow="Our products" title="Shop by" accent="category" to="/shop" />
@@ -92,9 +94,10 @@ function Categories() {
 }
 
 function FeaturedProducts() {
+  const { categories, products } = useCatalog()
   const tabs = [{ key: 'all', label: 'All' }, ...categories.slice(0, 4).map((c) => ({ key: c.slug, label: c.name }))]
   const [tab, setTab] = useState('all')
-  const list = products.filter((p) => p.tags?.includes('featured') && (tab === 'all' || p.category === tab)).slice(0, 8)
+  const list = products.filter((p) => p.featured && (tab === 'all' || p.category === tab)).slice(0, 8)
   return (
     <section className="mx-auto mt-20 max-w-7xl px-4">
       <SectionHeader eyebrow="Hand-picked" title="Featured" accent="products" to="/shop" />
@@ -142,7 +145,8 @@ function AboutBand() {
 }
 
 function BestSellers() {
-  const list = products.filter((p) => p.tags?.includes('best')).slice(0, 8)
+  const { products } = useCatalog()
+  const list = products.filter((p) => p.best).slice(0, 8)
   return (
     <section className="mx-auto mt-24 max-w-7xl px-4">
       <SectionHeader eyebrow="Most ordered" title="Best" accent="sellers" to="/shop?sort=popular" />
@@ -154,7 +158,8 @@ function BestSellers() {
 }
 
 function BrandWall() {
-  const logos = brands.filter((b) => !b.own)
+  const { brands } = useCatalog()
+  const logos = brands.filter((b) => !b.own && b.logo)
   return (
     <section className="mx-auto mt-24 max-w-7xl px-4">
       <SectionHeader eyebrow="Brands we consolidate" title="Your gateway to Sri Lanka's" accent="finest brands" to="/brands" cta="All brands" />
@@ -212,6 +217,7 @@ function Gallery() {
 }
 
 function LatestBlogs() {
+  const { blogs } = useCatalog()
   return (
     <section className="mx-auto mt-24 max-w-7xl px-4">
       <SectionHeader eyebrow="Journal" title="Stories from the" accent="island" to="/blogs" />

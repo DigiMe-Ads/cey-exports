@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
-import { brands } from '../data/catalog'
+import { useCatalog } from '../context/CatalogContext'
 
 function SlideProfile() {
   return (
@@ -101,7 +101,8 @@ export default function HeroCarousel() {
     return () => clearInterval(t)
   }, [paused, n])
 
-  const logos = brands.filter((b) => !b.own)
+  const { brands } = useCatalog()
+  const logos = brands.filter((b) => !b.own && b.logo)
   const half = Math.ceil(logos.length / 2)
 
   return (

@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { ArrowUpRight, Clock } from 'lucide-react'
 import PageHero from '../components/PageHero'
-import { blogs } from '../data/catalog'
+import { useCatalog } from '../context/CatalogContext'
 
 export default function Blogs() {
+  const { blogs } = useCatalog()
   const cats = ['All', ...new Set(blogs.map((b) => b.category))]
   const [cat, setCat] = useState('All')
   const [lead, ...rest] = blogs
@@ -13,7 +14,7 @@ export default function Blogs() {
     <>
       <PageHero eyebrow="Journal" title="Our latest" accent="Blog" subtitle="Articles, recipes and stories from our farms, warehouses and partner brands." />
 
-      {cat === 'All' && (
+      {cat === 'All' && lead && (
         <section className="mx-auto mt-10 max-w-7xl px-4">
           <article className="glass-strong group grid overflow-hidden rounded-[2rem] md:grid-cols-2">
             <img src={lead.image} alt="" className="h-full min-h-64 w-full object-cover" />

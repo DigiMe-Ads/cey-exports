@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { ChevronDown, Handshake, Headphones, LayoutGrid, Menu, Phone, Search, ShoppingCart, User, X } from 'lucide-react'
+import { Box, ChevronDown, Handshake, Headphones, LayoutGrid, Menu, Phone, Search, ShieldCheck, User, X } from 'lucide-react'
+import { FillRing } from './ContainerMeter'
+import { useAuth } from '../context/AuthContext'
 import Logo from './Logo'
 import { TelegramIcon, WhatsAppIcon } from './BrandIcons'
-import { categories, countIn } from '../data/catalog'
+import { useCatalog } from '../context/CatalogContext'
 import { useCart } from '../context/CartContext'
 
 export const navLinks = [
@@ -17,6 +19,7 @@ export const navLinks = [
 ]
 
 function UtilityBar() {
+  const { user } = useAuth()
   // AKLife's top strip: quick-contact channels left, currency / language / login right
   return (
     <div className="bg-forest-950 text-[12px] text-cream/80">
@@ -48,7 +51,7 @@ function UtilityBar() {
           <select className="rounded-md border border-white/15 bg-white/10 px-1.5 py-0.5 font-semibold text-cream outline-none" defaultValue="EN" aria-label="Language">
             <option className="text-ink">EN</option><option className="text-ink">AR</option><option className="text-ink">SI</option>
           </select>
-          <a href="#" className="hidden font-bold uppercase tracking-wider text-cream hover:text-gold sm:inline">Login</a>
+          <Link to={user ? '/account' : '/login'} className="hidden font-bold uppercase tracking-wider text-cream hover:text-gold sm:inline">{user ? 'My account' : 'Login'}</Link>
         </div>
       </div>
     </div>
@@ -59,6 +62,7 @@ function SearchBar({ className = '' }) {
   const navigate = useNavigate()
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('')
+  const { categories } = useCatalog()
   const submit = (e) => {
     e.preventDefault()
     const params = new URLSearchParams()
@@ -90,6 +94,7 @@ function SearchBar({ className = '' }) {
 
 function CategoryMenu() {
   const [open, setOpen] = useState(false)
+  const { categories, countIn } = useCatalog()
   const { pathname, search } = useLocation()
   useEffect(() => {
     setOpen(false)
@@ -124,8 +129,10 @@ function CategoryMenu() {
 }
 
 export default function Header() {
-  const { count, openDrawer } = useCart()
+  const { count, openDrawer, stats } = useCart()
+  const { user, isAdmin } = useAuth()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { categories } = useCatalog()
   const [scrolled, setScrolled] = useState(false)
   const { pathname } = useLocation()
 
@@ -163,14 +170,24 @@ export default function Header() {
             <a href="tel:+971501639820" className="hidden h-10 items-center gap-2 rounded-full bg-forest-800 px-4 text-sm font-bold text-cream shadow-lg shadow-forest-800/25 md:flex 2xl:flex xl:hidden">
               <Phone className="h-4 w-4 text-gold" /> +971 50 163 9820
             </a>
-            <a href="#" aria-label="Account" className="glass hidden h-10 w-10 sm:grid place-items-center rounded-full text-forest-800"><User className="h-5 w-5" /></a>
-            <button type="button" onClick={openDrawer} aria-label="Open cart" className="relative grid h-10 w-10 place-items-center rounded-full bg-gold text-forest-900 shadow-lg shadow-gold/40 transition hover:bg-gold-dark">
-              <ShoppingCart className="h-5 w-5" />
-              {count > 0 && (
-                <span key={count} className="absolute -right-1 -top-1 grid h-5 min-w-5 animate-pop place-items-center rounded-full bg-rust px-1 text-[11px] font-bold text-white ring-2 ring-cream">
-                  {count}
-                </span>
-              )}
+            {isAdmin && (
+              <Link to="/admin" aria-label="Admin panel" title="Admin panel" className="hidden h-10 items-center gap-1.5 rounded-full bg-rust px-3 text-xs font-bold text-cream sm:flex">
+                <ShieldCheck className="h-4 w-4" /> Admin
+              </Link>
+            )}
+            <Link to={user ? '/account' : '/login'} aria-label={user ? 'My account' : 'Sign in'} title={user ? 'My account' : 'Sign in'} className="glass hidden h-10 w-10 place-items-center rounded-full text-forest-800 sm:grid">
+              <User className="h-5 w-5" />
+            </Link>
+            {/* Container fill ring replaces the cart icon */}
+            <button type="button" onClick={openDrawer} aria-label={`Open container plan, ${Math.round(stats.fill)} percent full`} className="flex h-11 items-center gap-2 rounded-full bg-white/80 py-0.5 pl-0.5 pr-3 shadow-lg shadow-forest-800/10 ring-1 ring-forest-100 transition hover:bg-white">
+              <span className="relative grid h-10 w-10 place-items-center">
+                <FillRing pct={stats.fill} ready={stats.canCheckout} />
+                <Box className="h-4 w-4 text-forest-800" />
+              </span>
+              <span className="text-left leading-none">
+                <span className={`block text-sm font-extrabold ${stats.canCheckout ? 'text-leaf' : 'text-forest-800'}`}>{Math.round(stats.fill)}%</span>
+                <span className="text-[10px] font-semibold text-slate-500">{count ? `${count.toLocaleString()} ctns` : 'Container'}</span>
+              </span>
             </button>
           </div>
         </div>
@@ -227,7 +244,11 @@ export default function Header() {
                 </Link>
               ))}
             </div>
-            <Link to="/contact" className="mt-6 flex items-center gap-3 rounded-2xl bg-forest-800 p-4 text-cream">
+            <div className="mt-6 grid grid-cols-2 gap-2">
+              <Link to={user ? '/account' : '/login'} className="flex items-center justify-center gap-2 rounded-2xl bg-white/80 p-3 text-sm font-bold text-forest-800"><User className="h-4 w-4" /> {user ? 'My account' : 'Sign in'}</Link>
+              {isAdmin && <Link to="/admin" className="flex items-center justify-center gap-2 rounded-2xl bg-rust p-3 text-sm font-bold text-cream"><ShieldCheck className="h-4 w-4" /> Admin</Link>}
+            </div>
+            <Link to="/contact" className="mt-3 flex items-center gap-3 rounded-2xl bg-forest-800 p-4 text-cream">
               <Handshake className="h-6 w-6 text-gold" />
               <span><span className="block font-bold">Become a Buyer</span><span className="text-xs text-cream/70">Importers, distributors & wholesalers</span></span>
             </Link>
